@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     CharacterController _controller;
     [SerializeField] float _playerSpeed = 7f;
-    [SerializeField] float _gravity = 1f;
+    [SerializeField] float _gravity = 0.8f;
     [SerializeField] float _jumpHeight = 30;
     float _yVelocity;
     int _playerCoin = 0;
