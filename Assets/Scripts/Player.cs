@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] float _jumpHeight = 30;
     float _yVelocity;
     int _playerCoin = 0;
+    int _lives = 3;
     bool _hasDoubleJump = false;
     UiManager _uiManager;
 
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour
     {
         _controller = GetComponent<CharacterController>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UiManager>();
+        _uiManager.UpdaterLivesText(_lives);
 
         if (_controller == null)
         {
@@ -65,5 +68,32 @@ public class Player : MonoBehaviour
     {
         _playerCoin++;
         _uiManager.UpdtadeCoinBoard(_playerCoin);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        CharacterController cc;
+
+       if (other.tag == "DeadZone")
+        {
+            Vector3 respawnPos = GameObject.Find("Respawn").transform.position;
+
+            cc = GetComponent<CharacterController>();
+
+            if (cc != null)
+            {
+                cc.enabled = false;
+                this.transform.position = respawnPos;
+                cc.enabled = true;
+            }
+
+            _lives--;
+            _uiManager.UpdaterLivesText(_lives);
+
+            if (_lives < 1)
+            {
+                SceneManager.LoadScene(0);
+            }
+        }
     }
 }

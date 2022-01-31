@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UiManager : MonoBehaviour
 {
 
-    [SerializeField] Text _coinBoard;
+    [SerializeField] Text _coinBoard, _livesText;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,5 +22,10 @@ public class UiManager : MonoBehaviour
     public void UpdtadeCoinBoard(int newValue)
     {
         _coinBoard.text = $"Coins: {newValue}";
+    }
+
+    public void UpdaterLivesText(int newValue)
+    {
+        _livesText.text = $"Lives: {newValue}";
     }
 }
